@@ -1,9 +1,9 @@
 from flask import Flask
 
 from api.v1.addresses import addresses_api, Address
+from api.v1.products import products_api, Product
 '''
 from api.v1.orders import orders_api, Order
-from api.v1.products import products_api, Product
 from api.v1.users import users_api, User
 '''
 
@@ -33,14 +33,17 @@ class MyJSONEncoder(JSONEncoder):
                 'delivery_date': obj.delivery_date,
                 'price': obj.price
             }
+        '''
         if isinstance(obj, Product):
             return {
                 'ID': obj.ID,
                 'name': obj.name,
                 'price': obj.price,
+                'type_product': obj.type_product,
                 'supplier': obj.supplier,
                 'rate': obj.rate
             }
+        '''
         if isinstance(obj, User):
             return {
                 'ID': obj.ID,
@@ -60,9 +63,9 @@ app.json_encoder = MyJSONEncoder
 
 # Blueprint
 app.register_blueprint(addresses_api)
+app.register_blueprint(products_api)
 '''
 app.register_blueprint(orders_api)
-app.register_blueprint(products_api)
 app.register_blueprint(users_api)
 '''
 
