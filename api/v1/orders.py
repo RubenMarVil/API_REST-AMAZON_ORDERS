@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*
 
-from api.v1.addresses import addresses_list#, Address
+from api.v1.addresses import addresses_list
 from api.v1.products import products_list, Product
 
 from flask import Blueprint, jsonify, abort, make_response, request
