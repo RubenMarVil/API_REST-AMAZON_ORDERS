@@ -29,7 +29,7 @@ users_api = Blueprint('users_api', __name__)
 def getUsers():
     return jsonify({'USERS': users_list}), 200
 
-# Get one users from his/her ID(DNI)
+# Get one user from his/her ID(DNI)
 @users_api.route('/v1/users/<string:user_id>/', methods=['GET'])
 def getOneUser(user_id):
     for user in users_list:
