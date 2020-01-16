@@ -46,7 +46,7 @@ def createUser():
     password = request.json.get('password')
     name = request.json.get('name')
     surnames = request.json.get('surnames')
-    num_account = request.json.get('surnames')
+    num_account = request.json.get('num_account')
     prime = request.json.get('prime')
     new_user = User(ID, password, name, surnames, num_account, prime, [], [])
     users_list.append(new_user)

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+        <title>Web App - Amazon Orders</title>
+
+        <meta charset="utf-8">
+
+        <meta name="description" content="Aplicación Web Pedidos Amazon">
+        <meta name="keywords" content="HTML5,CSS3,Javascript,jQuery,Bootstrap,Knockout.js, cliente Web, REST API">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css">
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-fixed-top navbar-dark" style="background-color: #232f3e;">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <i class="fab fa-amazon"></i>
+                    Amazon Orders
+                </a>
+
+                <div id="navbarNavDropdown" class="collapse navbar-collapse" id="navbarContenidoSecciones">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home
+                                <i class="fas fa-home"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="users.html">Users
+                                <i class="fas fa-users"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="products.html">Products
+                                <i class="fas fa-box"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>  
+        
+        <div id="cuerpo" class="container">
+            <table class="table table-striped table-dark" style="margin-top:50px;">
+                <tr>
+                    <td style="width: 1px;"></td>
+                    <td><h4>Users
+                        <i class="fas fa-user"></i>
+                    </h4></td>
+                    <td><h4>Options
+                        <i class="fas fa-cogs"></i>
+                    </h4></td>
+                    <td><h4>Prime
+                        <i class="fas fa-award"></i>
+                    </h4></td>
+                </tr>
+                <!-- ko foreach: users -->
+                <tr>
+                    <td>
+                        <h5><span data-bind="text: ID"></span></h5>
+                    </td>
+                    <td>
+                        <p><b>Name:&nbsp;&nbsp;</b><span data-bind="text: name"></span></p>
+                        <p><b>Surnames:&nbsp;&nbsp;</b><span data-bind="text: surnames"></span></p>
+                        <p><b>Password:&nbsp;&nbsp;</b><span data-bind="text: password"></span></p>
+                        <p><b>Account Number:&nbsp;&nbsp;</b><span data-bind="text: num_account"></span></p>
+                    </td>
+                    <td>
+                        <button data-bind="click: $parent.editar" class="btn">
+                            <i class="fas fa-edit"></i>
+                        Edit</button>
+                        <button data-bind="click: $parent.borrar" class="btn">
+                            <i class="fas fa-trash"></i>
+                        Delete</button>
+                    </td>
+                    <td>
+                        <span data-bind="visible: prime()" class="badge badge-success">Prime</span>
+                        <span data-bind="visible: !prime()" class="badge badge-danger">No Prime</span>
+                    </td>
+                </tr>
+                <!-- /ko -->
+            </table>
+            <div class="row">
+                <div class="col-12"><button data-bind="click: anyadir" class="btn float-right btn-dark">
+                    <i class="fas fa-plus"></i>
+                Add User</button></div>
+            </div>
+        </div>
+
+        <div id="anyadir" class="modal hide fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header text-light" style="background-color: #232f3e;">
+                        <h5>Add User</h5>
+                        <!-- data-dismiss cierra todos los cuadros modales abiertos -->
+                        <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <div class="control-group">
+                                <label class="control-label" for="inputDNI">DNI</label>
+                                <div class="controls">
+                                    <input data-bind="value: ID" type="text" id="inputDNI" placeholder="11111111A" style="width: 90px;">
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top:20px;">
+                                <div class="col-md-6 mb-3">
+                                    <label class="control-label" for="inputName">Name</label>
+                                    <div class="controls">
+                                        <input data-bind="value: name" type="text" id="inputName" placeholder="John">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="control-label" for="inputSurnames">Surnames</label>
+                                    <div class="controls">
+                                        <input data-bind="value: surnames" type="text" id="inputSurnames" placeholder="Nieve">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group" style="margin-top:20px;">
+                                <label class="control-label" for="inputPassword">Password</label>
+                                <div class="controls">
+                                    <input type="password" data-bind="value: password" type="text" id="inputPassword" style="width: 220px;">
+                                </div>
+                            </div>
+                            <div class="control-group" style="margin-top:20px;">
+                                <label class="control-label" for="inputNumAccount">Account Number</label>
+                                <div class="controls">
+                                    <input data-bind="value: num_account" type="text" id="inputNumAccount" placeholder="XXXX-XXXX-XXXX-XXXX" style="width: 180px;">
+                                </div>
+                            </div>
+                            <div class="control-group" style="margin-top:20px;">
+                                <div class="controls">
+                                    Prime: <input type="checkbox" data-bind="checked: prime" id="inputPrime" checked />
+                                </div>
+                            </div>
+                        </form>
+                    </div> 
+                    <div class="modal-footer">
+                        <button data-bind="click: anyadirUser" type="button" class="btn btn-dark" style="background-color: #232f3e;">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="editar" class="modal hide fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header text-light" style="background-color: #232f3e;">
+                        <h5>Edit User</h5>
+                        <!-- data-dismiss cierra todos los cuadros modales abiertos -->
+                        <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <div class="row" style="margin-top:20px;">
+                                <div class="col-md-6 mb-3">
+                                    <label class="control-label" for="inputName">Name</label>
+                                    <div class="controls">
+                                        <input data-bind="value: name" type="text" id="inputName" placeholder="John">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="control-label" for="inputSurnames">Surnames</label>
+                                    <div class="controls">
+                                        <input data-bind="value: surnames" type="text" id="inputSurnames" placeholder="Nieve">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group" style="margin-top:20px;">
+                                <label class="control-label" for="inputPassword">Password</label>
+                                <div class="controls">
+                                    <input type="password" data-bind="value: password" type="text" id="inputPassword" style="width: 220px;">
+                                </div>
+                            </div>
+                            <div class="control-group" style="margin-top:20px;">
+                                <label class="control-label" for="inputNumAccount">Account Number</label>
+                                <div class="controls">
+                                    <input data-bind="value: num_account" type="text" id="inputNumAccount" placeholder="XXXX-XXXX-XXXX-XXXX" style="width: 180px;">
+                                </div>
+                            </div>
+                            <div class="control-group" style="margin-top:20px;">
+                                <div class="controls">
+                                    Prime: <input type="checkbox" data-bind="checked: prime" id="inputPrime" checked />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button data-bind="click: guardarModificacion" type="button" class="btn btn-dark" style="background-color: #232f3e;">Save Modify</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            // Código Javascript
+            function UsersViewModel() {
+                var self = this;
+                self.usersURI = 'http://127.0.0.1:5000/v1/users/';
+                self.users = ko.observableArray();
+
+                self.miAjax = function(uri, method, data) {
+                    var request = {
+                        url: uri,
+                        type: method,
+                        contentType: "application/json",
+                        accepts: "application/json",
+                        cache: false,
+                        dataType: 'json',
+                        data: JSON.stringify(data),
+                        error: function(jqXHR) {
+                            console.log("An error has occurred on an Ajax request: " + jqXHR.status);
+                        }
+                    };
+
+                    return $.ajax(request);
+                }
+
+                self.anyadir = function () {
+                    $('#anyadir').modal('show');
+                }
+
+                self.guardarNuevo = function (usuario) {
+                    self.miAjax(self.usersURI, 'POST', usuario).done(
+                        function(data) {
+                            self.users.push({
+                                ID: ko.observable(data.usuario.ID),
+                                password: ko.observable(data.usuario.password),
+                                name: ko.observable(data.usuario.name),
+                                surnames: ko.observable(data.usuario.surnames),
+                                num_account: ko.observable(data.usuario.num_account),
+                                prime: ko.observable(data.usuario.prime)
+                            });
+                        }
+                    );
+                }
+
+                self.editar = function (usuario) {
+                    editUserViewModel.mostrarUsuario(usuario);
+                    $('#editar').modal('show');
+                }
+
+                self.guardarModificacion = function (usuarioOriginal, usuarioModificado) {
+                    self.miAjax(self.usersURI + usuarioModificado.ID + '/', 'PUT', usuarioModificado).done(
+                        function (data) {
+                            data.usuario.password = ko.observable(data.usuario.password);
+                            data.usuario.name = ko.observable(data.usuario.name);
+                            data.usuario.surnames = ko.observable(data.usuario.surnames);
+                            data.usuario.num_account = ko.observable(data.usuario.num_account);
+                            data.usuario.prime = ko.observable(data.usuario.prime);
+                            self.users.replace(usuarioOriginal,data.usuario);
+                        });
+                }
+
+                self.borrar = function (usuario) {
+                    alert("Delete: " + usuario.name());
+                    self.eliminarUser(usuario);
+                }
+
+                self.eliminarUser = function(usuario) {
+                    self.miAjax(self.usersURI + usuario.ID() + '/', 'DELETE', usuario).done();
+                }
+
+                self.miAjax(self.usersURI,'GET').done(function(data) {
+                    for(var i = 0; i < data.USERS.length; i++){
+                        self.users.push({
+                            ID: ko.observable(data.USERS[i].ID),
+                            password: ko.observable(data.USERS[i].password),
+                            name: ko.observable(data.USERS[i].name),
+                            surnames: ko.observable(data.USERS[i].surnames),
+                            num_account: ko.observable(data.USERS[i].num_account),
+                            prime: ko.observable(data.USERS[i].prime),
+                            addresses: ko.observable(data.USERS[i].addresses),
+                            orders: ko.observable(data.USERS[i].orders)
+                        });
+                    }
+                });
+            }
+
+            var usersViewModel = new UsersViewModel();
+
+            function AnyadirUserViewModel() {
+                var self = this;
+                self.ID = ko.observable();
+                self.name = ko.observable();
+                self.password= ko.observable();
+                self.surnames = ko.observable();
+                self.num_account = ko.observable();
+                self.prime= ko.observable(false);
+
+                self.anyadirUser = function() {
+                    $('#anyadir').modal('hide');
+
+                    usersViewModel.guardarNuevo({
+                        ID: self.ID(),
+                        name: self.name(),
+                        password: self.password(),
+                        surnames: self.surnames(),
+                        num_account: self.num_account(),
+                        prime: self.prime()
+                    });
+                    self.ID("");
+                    self.name("");
+                    self.password("");
+                    self.surnames("");
+                    self.num_account("");
+                }
+            }
+
+            function EditUserViewModel() {
+                var self = this;
+                self.ID = ko.observable();
+                self.name = ko.observable();
+                self.password= ko.observable();
+                self.surnames = ko.observable();
+                self.num_account = ko.observable();
+                self.prime= ko.observable(false);
+
+                self.mostrarUsuario = function(usuario) {
+                    // Lo copia antes de modificarlo
+                    self.usuario = usuario;
+                    self.ID(usuario.ID());
+                    self.name(usuario.name())
+                    self.password(usuario.password());
+                    self.surnames(usuario.surnames());
+                    self.num_account(usuario.num_account());
+                    self.prime(usuario.prime());
+                }
+
+                self.guardarModificacion = function(){
+                    $('#editar').modal('hide');
+                    usersViewModel.guardarModificacion(self.usuario, {
+                        ID: self.ID(),
+                        name: self.name(),
+                        password: self.password(),
+                        surnames: self.surnames(),
+                        num_account: self.num_account(),
+                        prime: self.prime()
+                    })
+                }
+            }
+
+            ko.applyBindings(usersViewModel, $('#cuerpo')[0]);
+            var anyadirUserViewModel = new AnyadirUserViewModel();
+            ko.applyBindings(anyadirUserViewModel, $('#anyadir')[0]);
+            var editUserViewModel = new EditUserViewModel();
+            ko.applyBindings(editUserViewModel, $('#editar')[0]);
+
+        </script>
+
+    </body>
+
+</html>

@@ -54,7 +54,7 @@ class MyJSONEncoder(JSONEncoder):
             }
         return super(MyJSONEncoder, self).default(obj)
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path="")
 app.json_encoder = MyJSONEncoder
 
 # Blueprint
@@ -62,6 +62,10 @@ app.register_blueprint(addresses_api)
 app.register_blueprint(products_api)
 app.register_blueprint(orders_api)
 app.register_blueprint(users_api)
+
+@app.route('/')
+def root():
+    return app.send_static_file('index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
